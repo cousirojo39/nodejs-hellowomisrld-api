@@ -1,15 +1,30 @@
 pipeline {
     agent any
-    tools {nodejs "Nodejs"}
+
+    tools {
+        nodejs '21.7.2'
+    }
+    
     stages {
-        stage ('Instalar dependencias de Nodejs'){
-            steps{
-                sh "npm install"
+        stage('Install Dependencies') {
+            steps {
+                // Ejecuta el comando npm install para instalar las dependencias
+                script {
+                    // Usa un shell compatible con versiones antiguas de Node.js
+                    sh 'npm install'
+                }
             }
         }
-        stage ('Testing de Nodejs'){
-            steps{
-                sh "npm test"
+        
+        stage('Test') {
+            steps {
+                // Ejecuta el comando npm test para ejecutar las pruebas
+                script {
+                    // Usa un shell compatible con versiones antiguas de Node.js
+                    sh 'npm test --no-update-notifier'
+                }
             }
+        }
     }
-} 
+    
+    post {
